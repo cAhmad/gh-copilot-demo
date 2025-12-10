@@ -1,1 +1,1 @@
-You should always use conventional commit
+You should always use conventional commit messages
