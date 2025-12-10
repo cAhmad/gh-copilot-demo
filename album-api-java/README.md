@@ -1,6 +1,6 @@
 # Album API - Java Spring Boot
 
-A modern RESTful API built with Spring Boot 3.2 and Java 17 to manage a collection of albums.
+A modern RESTful API built with Spring Boot 4.0 and Java 25 to manage a collection of albums.
 
 ## Features
 
@@ -13,8 +13,8 @@ A modern RESTful API built with Spring Boot 3.2 and Java 17 to manage a collecti
 
 ## Technology Stack
 
-- **Java 17**
-- **Spring Boot 3.2.0**
+- **Java 25**
+- **Spring Boot 4.0.0**
 - **Maven** for dependency management
 - **AssertJ** for fluent assertions in tests
 
@@ -55,7 +55,7 @@ Returns a specific album by ID.
 
 ### Prerequisites
 
-- Java 17 or higher
+- Java 25 or higher
 - Maven 3.6 or higher
 
 ### Running the Application
