@@ -17,5 +17,14 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  preview: {
+    port: 4173,
+    proxy: {
+      '/albums': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      }
+    }
   }
 })
