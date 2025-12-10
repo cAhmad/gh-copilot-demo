@@ -1,12 +1,12 @@
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div v-if="isOpen" class="cart-overlay" @click="$emit('close')"></div>
+      <div v-if="isOpen" class="cart-overlay" @click="$emit('close')" aria-hidden="true"></div>
     </Transition>
     <Transition name="slide">
-      <div v-if="isOpen" class="cart-drawer">
+      <div v-if="isOpen" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
         <div class="cart-header">
-          <h2>🛒 Your Cart</h2>
+          <h2 id="cart-title">🛒 Your Cart</h2>
           <button class="close-btn" @click="$emit('close')" aria-label="Close cart">
             ✕
           </button>
