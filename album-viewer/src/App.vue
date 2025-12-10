@@ -1,8 +1,20 @@
 <template>
   <div class="app">
     <header class="header">
-      <h1>🎵 Album Collection</h1>
-      <p>Discover amazing music albums</p>
+      <div class="header-content">
+        <div>
+          <h1>🎵 Album Collection</h1>
+          <p>Discover amazing music albums</p>
+        </div>
+        <button class="cart-icon-btn" @click="toggleCart" aria-label="Shopping cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span v-if="cart.length > 0" class="cart-badge">{{ cart.length }}</span>
+        </button>
+      </div>
     </header>
 
     <main class="main">
@@ -21,9 +33,17 @@
           v-for="album in albums" 
           :key="album.id" 
           :album="album" 
+          @add-to-cart="addToCart"
         />
       </div>
     </main>
+
+    <CartDrawer 
+      :is-open="isCartOpen"
+      :cart="cart"
+      @close="toggleCart"
+      @remove-item="removeFromCart"
+    />
   </div>
 </template>
 
@@ -31,11 +51,14 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import AlbumCard from './components/AlbumCard.vue'
+import CartDrawer from './components/CartDrawer.vue'
 import type { Album } from './types/album'
 
 const albums = ref<Album[]>([])
 const loading = ref<boolean>(true)
 const error = ref<string | null>(null)
+const cart = ref<Album[]>([])
+const isCartOpen = ref<boolean>(false)
 
 const fetchAlbums = async (): Promise<void> => {
   try {
@@ -51,6 +74,21 @@ const fetchAlbums = async (): Promise<void> => {
   }
 }
 
+const addToCart = (album: Album): void => {
+  cart.value.push(album)
+}
+
+const removeFromCart = (albumId: number): void => {
+  const index = cart.value.findIndex(item => item.id === albumId)
+  if (index !== -1) {
+    cart.value.splice(index, 1)
+  }
+}
+
+const toggleCart = (): void => {
+  isCartOpen.value = !isCartOpen.value
+}
+
 onMounted(() => {
   fetchAlbums()
 })
@@ -63,9 +101,21 @@ onMounted(() => {
 }
 
 .header {
-  text-align: center;
   margin-bottom: 3rem;
   color: white;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-content > div {
+  text-align: center;
+  flex: 1;
 }
 
 .header h1 {
@@ -77,6 +127,43 @@ onMounted(() => {
 .header p {
   font-size: 1.2rem;
   opacity: 0.9;
+}
+
+.cart-icon-btn {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.cart-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border: 2px solid white;
 }
 
 .main {
