@@ -3,7 +3,12 @@
     <header class="header">
       <h1>🎵 Album Collection</h1>
       <p>Discover amazing music albums</p>
+      <div class="header-actions">
+        <CartIcon @click="isCartOpen = true" />
+      </div>
     </header>
+
+    <CartDrawer :isOpen="isCartOpen" @close="isCartOpen = false" />
 
     <main class="main">
       <div v-if="loading" class="loading">
@@ -31,11 +36,14 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import AlbumCard from './components/AlbumCard.vue'
+import CartIcon from './components/CartIcon.vue'
+import CartDrawer from './components/CartDrawer.vue'
 import type { Album } from './types/album'
 
 const albums = ref<Album[]>([])
 const loading = ref<boolean>(true)
 const error = ref<string | null>(null)
+const isCartOpen = ref<boolean>(false)
 
 const fetchAlbums = async (): Promise<void> => {
   try {
@@ -66,6 +74,7 @@ onMounted(() => {
   text-align: center;
   margin-bottom: 3rem;
   color: white;
+  position: relative;
 }
 
 .header h1 {
@@ -77,6 +86,12 @@ onMounted(() => {
 .header p {
   font-size: 1.2rem;
   opacity: 0.9;
+}
+
+.header-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .main {
