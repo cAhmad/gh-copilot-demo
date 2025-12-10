@@ -154,10 +154,7 @@ test.describe('Cart Management', () => {
     // Click close button
     await page.locator('.close-btn').click();
 
-    // Wait a moment for animation
-    await page.waitForTimeout(500);
-
-    // Verify drawer is closed
+    // Verify drawer is closed (wait for animation to complete)
     await expect(page.locator('.cart-drawer--open')).not.toBeVisible();
   });
 
@@ -174,10 +171,7 @@ test.describe('Cart Management', () => {
     // Click overlay
     await page.locator('.cart-overlay').click();
 
-    // Wait a moment for animation
-    await page.waitForTimeout(500);
-
-    // Verify drawer is closed
+    // Verify drawer is closed (wait for animation to complete)
     await expect(page.locator('.cart-drawer--open')).not.toBeVisible();
   });
 

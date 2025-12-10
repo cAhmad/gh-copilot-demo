@@ -19,7 +19,7 @@
         </div>
 
         <div v-else class="cart-items">
-          <div v-for="(item, index) in cart" :key="`${item.id}-${index}`" class="cart-item">
+          <div v-for="(item, index) in cart" :key="index" class="cart-item">
             <img :src="item.image_url" :alt="item.title" class="cart-item-image" />
             <div class="cart-item-details">
               <h3 class="cart-item-title">{{ item.title }}</h3>
